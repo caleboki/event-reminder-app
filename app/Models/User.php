@@ -42,4 +42,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the events created by the user.
+     */
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    /**
+     * Get the events the user has registered for.
+     */
+    public function registeredEvents()
+    {
+        return $this->belongsToMany(Event::class, 'registrations')
+                    ->withPivot('status')
+                    ->withTimestamps();
+    }
 }
